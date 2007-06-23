@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Rules>
+  <Rule TypeName="MyRule" Category="FxCopCustomRules.CustomRules" CheckId="Rule0001">
+    <Name>Objects of the Object class should be properly named.</Name>
+    <Description>Objects of the Object class should be properly named.</Description>
+    <GroupOwner>Joydip</GroupOwner>
+    <DevOwner>Self</DevOwner>
+    <Owner>Self</Owner>
+    <Url>http://localhost</Url>
+    <Resolution>This is a sample resolution with param {0} so that you can see it works.</Resolution>
+    <Email>joydipkanjilal@yahoo.com</Email>
+    <MessageLevel Certainty="50">Warning</MessageLevel>
+    <FixCategories>Breaking</FixCategories>
+  </Rule>
+</Rules>

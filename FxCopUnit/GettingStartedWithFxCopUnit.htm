@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>5 minute guide to FxCopUnit</title>
+</head>
+<body dir="ltr">
+    <p class="MsoNormal" style="margin: 0cm 0cm 12pt">
+        <span style="font-size: 24pt">The Five Minute Guide to FxCopUnit</span><br />
+        By Roy Osherove<br />
+        Blog: <a href="http://www.Iserializable.com">www.Iserializable.com</a>
+        <br />
+        Email: <a href="mailto:Roy@Osherove.com">Roy@Osherove.com</a></p>
+    <ul type="disc">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l2 level1 lfo1; tab-stops: list 36.0pt">TeamAgile.FxCopRuleTesting - Samples
+            on how to use FxCopUnit</li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l2 level1 lfo1; tab-stops: list 36.0pt">TeamAgile.FxCopRuleTesting.SampleRules
+            - Sample on building a custom rule</li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l2 level1 lfo1; tab-stops: list 36.0pt"><strong>TeamAgile.FxCopUnit -</strong>
+            The actual library you'll want to reference from your tests</li>
+    </ul>
+    <p>
+        Writing Integration Tests with FxCopUnit:</p>
+    <ol start="1" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l1 level1 lfo2; tab-stops: list 36.0pt">Create your custom rule library
+            with the rules you would like to test. It should already have the Rule manifest
+            XML file in it compiled as embedded resource, with the rule IDs and Categories defined.
+            They will be required when you write your integration tests to specify which rule
+            you would like to test. See the <b>TeamAgile.FxCopRuleTesting.SampleRules</b> project
+            in the source download for a sample on how to do this.</li>
+        <ol start="1" type="1">
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+                mso-list: l1 level2 lfo2; tab-stops: list 72.0pt"><b>Caveat</b> : A custom rule
+                must call it’s base class in the constructor with it’s exact class name. That is
+                why I have created a generic base rule that you can use to easily and automatically
+                do this. See <b><span style="font-family: 'Courier New'">CustomRuleBase</span></b>
+                class on usage.</li>
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+                mso-list: l1 level2 lfo2; tab-stops: list 72.0pt"><b>Caveat</b>: A custom rule must
+                reference the XML rule file that is associated with the project as a resource. See
+                the CustomRuleBase class to see how it’s done and make sure you implement this in
+                your tests.</li>
+        </ol>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l1 level1 lfo2; tab-stops: list 36.0pt">Create a new Class library project
+            to hold your unit tests</li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l1 level1 lfo2; tab-stops: list 36.0pt">Build the library once, and then
+            go to the bin\debug folder under that library. </li>
+        <ol start="1" type="1">
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+                mso-list: l1 level2 lfo2; tab-stops: list 72.0pt">Create a folder named “Engines”
+                under Bin\Debug </li>
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+                mso-list: l1 level2 lfo2; tab-stops: list 72.0pt">copy the file <span style="font-family: 'Courier New'">
+                    IntrospectionAnalysisEngine.dll </span>from the folder <span style="font-family: 'Courier New'">
+                        C:\Program Files\Microsoft Visual Studio 8\Team Tools\Static Analysis Tools\FxCop\Engines
+                        . </span></li>
+            <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+                mso-list: l1 level2 lfo2; tab-stops: list 72.0pt"><span style="color: red; font-family: Tahoma">
+                    Your tests will not run without this step!</span></li>
+        </ol>
+    </ol>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt 18pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto">
+        <?xml namespace="" ns="urn:schemas-microsoft-com:office:office" prefix="o" ?>
+        <o:p>&nbsp;</o:p>
+    </p>
+    <ol start="4" type="1">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l1 level1 lfo2; tab-stops: list 36.0pt">Add the following references:</li>
+    </ol>
+    <ul type="disc">
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo3; tab-stops: list 36.0pt">from <span style="font-family: Courier">
+                C:\Program Files\Microsoft Visual Studio 8\Team Tools\Static Analysis Tools\FxCop\</span></li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo3; tab-stops: list 36.0pt">&nbsp; &nbsp; &nbsp; FxCopCommon
+        </li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo3; tab-stops: list 36.0pt">&nbsp; &nbsp; &nbsp; FxCopSDK</li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo3; tab-stops: list 36.0pt">&nbsp; &nbsp; &nbsp; Microsoft.Cci</li>
+        <li class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto;
+            mso-list: l0 level1 lfo3; tab-stops: list 36.0pt">Add reference to <b>XtUnit.Framework.dll<o:p></o:p></b></li>
+    </ul>
+    <p style="margin-left: 36pt; text-indent: -18pt; mso-list: l1 level1 lfo2; tab-stops: list 36.0pt">
+        <span style="mso-fareast-font-family: 'Times New Roman'"><span style="mso-list: Ignore">
+            5.<span style="font: 7pt 'Times New Roman'"> &nbsp; &nbsp;&nbsp; </span></span></span>
+        <span dir="ltr">Create a new test fixture class</span></p>
+    <p style="margin-left: 36pt; text-indent: -18pt; mso-list: l1 level1 lfo2; tab-stops: list 36.0pt">
+        <span style="mso-fareast-font-family: 'Times New Roman'"><span style="mso-list: Ignore">
+            6.<span style="font: 7pt 'Times New Roman'"> &nbsp; &nbsp;&nbsp; </span></span></span>
+        <span dir="ltr">Inherit<span style="mso-spacerun: yes">&nbsp; </span>your class from
+            FxCopTestFixture</span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        Add the attribute to the top of the class to specify the location of your custom
+        rules: <span style="font-family: Consolas; mso-no-proof: yes">[<span style="color: maroon">FxCopCustomRuleLocation</span>(<span
+            style="color: #a31515">"TeamAgile.FxCopRuleTesting.SampleRules.dll"</span>)]<o:p></o:p></span></p>
+    <p style="margin-left: 36pt; text-indent: -18pt; mso-list: l1 level1 lfo2; tab-stops: list 36.0pt">
+        <span style="mso-fareast-font-family: 'Times New Roman'"><span style="mso-list: Ignore">
+            7.<span style="font: 7pt 'Times New Roman'"> &nbsp; &nbsp;&nbsp; </span></span></span>
+        <span dir="ltr">Create a new test:</span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt 36pt; text-indent: 36pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes">[<span style="color: maroon">Test</span>]<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>[<span style="color: maroon">FxCopRuleToTest</span>(<span
+                style="color: #a31515">"Rule0001"</span>, <span style="color: #a31515">"FxCopCustomRules.CustomRules"</span>,<span
+                    style="color: blue">true</span>)]<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: blue">public</span> <span
+                style="color: blue">void</span> RunRuleAgainstMethod()<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>{<o:p></o:p></span></p>
+    <p>
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>}</span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        Note the<span style="mso-spacerun: yes">&nbsp; </span><span style="color: maroon;
+            font-family: Consolas; mso-no-proof: yes">FxCopRuleToTest</span> attribute on
+        the test. Specify the rule ID and Rule category as written in the Rule XML file
+        manifest located inside your custom rules library (in the sample source it is <span
+            style="font-family: 'Courier New'">RuleManifest.Xml</span> – complied as Embedded
+        resource).
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        The third parameter setup up FxCop engine so that the current test library will
+        also be the main target to test the rules against.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        Alternatively, you can specify the name of the target assembly to test against.
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        You can also specify the specific type that your rule will run against (all other
+        types in the assembly will be ignored by the rules engine) .</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        Here’s a test that specifies a rule, and a specific method to test against.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        It then tells FxCop to analyze the targets and does some simple asserts against
+        the resulting FxCop report.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt 36pt; text-indent: 36pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes">[<span style="color: maroon">Test</span>]<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>[<span style="color: maroon">FxCopRuleToTest</span>(<span
+                style="color: #a31515">"Rule0001"</span>, <span style="color: #a31515">"FxCopCustomRules.CustomRules"</span>,<span
+                    style="color: blue">true</span>)]<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: blue">public</span> <span
+                style="color: blue">void</span> RunRuleAgainstMethod()<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>{<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: maroon">MethodInfo</span>
+            methodInfo = MethodBase.GetCurrentMethod() as MethodInfo;<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: red">FxRunner</span>.EnableMethodToCheck(methodInfo);<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>FxRunner.Analyze();<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes">
+            <o:p>&nbsp;</o:p>
+        </span>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: red">FxReport</span>.Assert.AtLeastOneAnalysisProblem();<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: maroon">Console</span>.WriteLine(FxReport.Document.InnerXml);<o:p></o:p></span></p>
+    <p>
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>}</span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        The test uses two objects which are available once you inhering from FxCopTestFixture:</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <b><u>FxRunner:<o:p></o:p></u></b></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        Helper used to specify rules, types and other logic, as well as to start the analysis
+        process by FxCop.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <b><u>FxReport:<o:p></o:p></u></b></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        A report object that is generated only after calling FxRunner.Analyze(). It will
+        be null before that.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <b><u><span style="font-size: 14pt">Asserting against output:<o:p></o:p></span></u></b></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        Most of the asserts should be performed against the <b>FxReport</b> object, which
+        already has a property named “Assert”. It is an AssertFxCop object which has some
+        very simple asserts in it. It can be extended though- it’s a partial class. (so
+        is the FxCopReport class).</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-indent: 36pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <h2 style="margin: 12pt 0cm 3pt">
+        <em><span style="font-size: 14pt; font-family: Arial">Writing real <span style="font-weight: normal">
+            Unit Tests</span> with FxCop, not Integration Tests</span></em></h2>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        It’s possible to create elegant small tests which require little to no configuration
+        whatsoever that test out your custom rule’s ability to verify problems.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        It’s so simple in fact, that there’s no need to use FxCopUnit , unless you absolutely
+        want to test your rule as part of a fully integrated rules framework.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        To achieve simple FxCop unit tests, take a look at FxCopUnitTests.cs file in teamAgile.FxCopRuleTesting.csproj.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <o:p>&nbsp;</o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        Here’s a sample unit test:</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt 36pt; text-indent: 36pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes">[<span style="color: maroon">Test</span>]<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: blue">public</span> <span
+                style="color: blue">void</span> InvokeMyRuleWithMethodInfo()<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>{<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: maroon">MethodInfo</span>
+            someMethodInfo = <span style="color: maroon">MethodBase</span>.GetCurrentMethod()
+            <span style="color: blue">as</span> <span style="color: maroon">MethodInfo</span>;<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span>Microsoft.Cci.<span style="color: maroon">Method</span>
+            methodData = Microsoft.Cci.<span style="color: red">Method.GetMethod(someMethodInfo);</span><o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: maroon">MyRule</span>
+            ruleUnderTest = <span style="color: blue">new</span> <span style="color: maroon">MyRule</span>();<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: maroon">ProblemCollection</span>
+            problems = ruleUnderTest.Check(methodData);<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes">
+            <o:p>&nbsp;</o:p>
+        </span>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt; mso-layout-grid-align: none">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span style="color: maroon">Assert</span>.Greater(0,problems.Count);<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <span style="font-family: Consolas; mso-no-proof: yes"><span style="mso-spacerun: yes">
+            &nbsp; &nbsp; &nbsp; &nbsp; </span>}<o:p></o:p></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <span style="font-family: Consolas; mso-no-proof: yes">
+            <o:p>&nbsp;</o:p>
+        </span>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <span style="font-family: Consolas; mso-no-proof: yes">A custom rule can accept many
+            kinds of inputs, but ultimately the most important ones are “Member” and “TypeNode”.
+            <o:p></o:p>
+        </span>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <span style="font-family: Consolas; mso-no-proof: yes"></span>&nbsp;</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        &nbsp;</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <span style="font-family: Consolas; mso-no-proof: yes"><strong>Here’s the hiearchy for
+            Member these:<o:p></o:p></strong></span></p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <span style="font-family: Consolas; mso-no-proof: yes">
+            <?xml namespace="" ns="urn:schemas-microsoft-com:vml" prefix="v" ?>
+            <v:shapetype id="_x0000_t75" coordsize="21600,21600" filled="f" o:preferrelative="t"
+                o:spt="75" path="m@4@5l@4@11@9@11@9@5xe" stroked="f"><v:stroke joinstyle="miter"></v:stroke><v:formulas><v:f 
+eqn="if lineDrawn pixelLineWidth 0"></v:f><v:f eqn="sum @0 1 0"></v:f><v:f 
+eqn="sum 0 0 @1"></v:f><v:f eqn="prod @2 1 2"></v:f><v:f 
+eqn="prod @3 21600 pixelWidth"></v:f><v:f 
+eqn="prod @3 21600 pixelHeight"></v:f><v:f eqn="sum @0 0 1"></v:f><v:f 
+eqn="prod @6 1 2"></v:f><v:f eqn="prod @7 21600 pixelWidth"></v:f><v:f 
+eqn="sum @8 21600 0"></v:f><v:f eqn="prod @7 21600 pixelHeight"></v:f><v:f 
+eqn="sum @10 21600 0"></v:f></v:formulas><v:path o:connecttype="rect" 
+gradientshapeok="t" o:extrusionok="f"></v:path><o:lock aspectratio="t" 
+v:ext="edit"></o:lock></v:shapetype>
+            <v:shape id="_x0000_i1025" style="width: 235.5pt; height: 345.75pt" type="#_x0000_t75"><v:imagedata o:title="" 
+src="file:///C:\DOCUME~1\ROY~1.ROY\LOCALS~1\Temp\msohtml1\01\clip_image001.png"></v:imagedata></v:shape>
+            <o:p></o:p>
+        </span>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <o:p><STRONG>&nbsp;(see the 
+hiearchy image in the solution items)</STRONG></o:p>
+    </p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        &nbsp;</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        <o:p><STRONG></STRONG></o:p>
+        So the only question remains: how to you transform a simple reflection MethodInfo
+        or EventInfo or FieldInfo or Type into the corresponding Member type in Mcirosoft.Cci?</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        &nbsp;</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        It’s pretty simple: For each type. There’s a static method on the counter type to
+        get that transformation. In the test above to get a Method object, I used the static
+        Method.GetMethod(MethodInfo) to get what I need.</p>
+    <p class="MsoNormal" style="margin: 0cm 0cm 0pt">
+        You’ll find the same thing for Event, TypeNode and many others.All that’s left is
+        to create a new instance o fyour custom rule (without needing FxCop engine at all),
+        and invoking it’s check method with the data you have specified.</p>
+    <p>
+        All that’s left is to check stuff on the problem collection that you need to get
+        back.</p>
+    <p>
+        Voila! You have yourself a true unit test with FxCop custom rules (or as close as
+        possible to one..).</p>
+
+</body>
+</html>
