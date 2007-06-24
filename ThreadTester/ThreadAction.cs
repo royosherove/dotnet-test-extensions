@@ -27,20 +27,27 @@ namespace Osherove.ThreadTester
 
         void startDelegate()
         {
-            if (flag != null)
+            if (startSignal != null)
             {
-                flag.WaitOne();
+                startSignal.WaitOne();
             }
 
-            doCallback.Invoke();
-            Thread.Sleep(10);
-            signalFinishedCallback.Invoke(this);
+            try
+            {
+                doCallback.Invoke();
+                signalFinishedCallback.Invoke(this);
+            }
+            catch (ThreadAbortException e)
+            {
+                //make sure exception does not get re-thrown
+                Thread.ResetAbort();
+            }
         }
 
         private Thread thread;
         private Func doCallback;
         private ThreadFinishedDelegate signalFinishedCallback;
-        private ManualResetEvent flag;
+        private ManualResetEvent startSignal;
 
         public Thread Thread
         {
@@ -62,7 +69,7 @@ namespace Osherove.ThreadTester
 
         public void StartWhenSignaled(ManualResetEvent startSignal)
         {
-            flag = startSignal;
+            this.startSignal = startSignal;
             Start();
         }
     }

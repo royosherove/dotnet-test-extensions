@@ -150,13 +150,13 @@ namespace Osherove.ThreadTester.Tests
         {
             Counter c = new Counter();
             ThreadTester tt = new ThreadTester();
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 tt.AddThreadAction(
                     delegate
                         {
 //                            Console.WriteLine(Thread.CurrentThread.Name);
-                            for (int j = 0; j < 1000; j++)
+                            for (int j = 0; j < 100000; j++)
                             {
                                 c.Increment();
                             }
@@ -166,7 +166,7 @@ namespace Osherove.ThreadTester.Tests
             
           
 
-            tt.StartAllThreads(15000);
+            tt.StartAllThreads(5000);
             Assert.AreEqual(1000000,c.Count);
         }
         
