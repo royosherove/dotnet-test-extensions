@@ -14,5 +14,6 @@ namespace Osherove.ThreadTester
     {
         void StartAll(int timeout, List<ThreadAction> actions);
         void OnThreadFinished(ThreadAction threadAction);
+        void StopAll();
     }
 }

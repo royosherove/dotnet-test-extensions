@@ -35,7 +35,6 @@ namespace Osherove.ThreadTester.Strategies
 
         public void StartAllThreads(int runningTimeout)
         {
-            Console.WriteLine("Starting " + threadActions.Count + " threads..");
             finishedThreadsCount = 0;
             StartAllThreadsAtOnce();
 

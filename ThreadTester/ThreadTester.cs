@@ -12,6 +12,7 @@ using Timer=System.Timers.Timer;
 namespace Osherove.ThreadTester
 {
     public delegate void Func();
+    public delegate bool CheckDelegate();
     public delegate void ThreadFinishedDelegate(ThreadAction threadAction);
 
     public class ThreadTester
@@ -20,7 +21,7 @@ namespace Osherove.ThreadTester
 
         private readonly List<ThreadAction> threadActions = new List<ThreadAction>();
         private long lastRunTime;
-        readonly Stopwatch stopper = new Stopwatch();
+        readonly Stopwatch stopwatch = new Stopwatch();
         private long timeOut;
         private ThreadRunBehavior runBehavior=ThreadRunBehavior.RunUntilAllThreadsFinish;
 
@@ -57,11 +58,15 @@ namespace Osherove.ThreadTester
         {
             runner = CreateStrategy(RunBehavior);
             timeOut = runningTimeout;
-            stopper.Reset();
-            stopper.Start();
+            stopwatch.Reset();
+            stopwatch.Start();
+            checkTimer.Start();
+            
             runner.StartAll(runningTimeout, threadActions);
-            stopper.Stop();
-            lastRunTime = stopper.ElapsedMilliseconds;
+            
+            checkTimer.Stop();
+            stopwatch.Stop();
+            lastRunTime = stopwatch.ElapsedMilliseconds;
         }
 
 
@@ -78,6 +83,20 @@ namespace Osherove.ThreadTester
             runStrategies.Add(ThreadRunBehavior.RunUntilAllThreadsFinish, new AllThreadsShouldFinishStrategy());
 
             return runStrategies[val];
+        }
+
+        private Timer checkTimer = new Timer();
+        public void StopWhenTrue(CheckDelegate checkCallback,double interval)
+        {
+            checkTimer = new Timer(interval);
+            checkTimer.Elapsed+=delegate {
+                                        if(checkCallback())
+                                        {
+                                            checkTimer.Stop();
+                                            runner.StopAll();
+                                        }
+                                    };
+            
         }
     }
 }

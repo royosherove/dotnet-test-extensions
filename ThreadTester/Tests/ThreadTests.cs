@@ -191,5 +191,31 @@ namespace Osherove.ThreadTester.Tests
             tt.RunBehavior=ThreadRunBehavior.RunForSpecificTime;
             tt.StartAllThreads(22500);
         }
+
+        [Test]
+        public void PoolResults()
+        {
+            Counter c = new Counter();
+            ThreadTester tt = new ThreadTester();
+            tt.RunBehavior=ThreadRunBehavior.RunForSpecificTime;
+            tt.AddThreadAction(delegate
+                                       {
+                                           for (int j = 0; j < 103; j++)
+                                           {
+                                               c.Increment();
+                                           }
+                                           Thread.Sleep(50);
+                                       });
+
+            tt.StopWhenTrue(delegate
+                                {
+                                    Console.WriteLine("currently at " + c.Count);
+                                    return c.Count > 1000;
+                                },100);
+
+            tt.StartAllThreads(10000);
+            Assert.Greater(c.Count,1000);
+            Assert.Less(c.Count,1050);
+        }
     }
 }

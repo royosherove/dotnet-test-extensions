@@ -6,16 +6,21 @@ namespace Osherove.ThreadTester.Strategies
 {
     internal abstract class AbstractThreadRunStrategy : IThreadRunStrategy
     {
-        
+
         protected List<ThreadAction> threadActions;
 
-        public abstract void StartAll(int timeout,List<ThreadAction> actions);
+        public abstract void StartAll(int timeout, List<ThreadAction> actions);
 
         public abstract void OnThreadFinished(ThreadAction threadAction);
 
+        public void StopAll()
+        {
+            StopAllRunningThreads();
+        }
+
         protected void StartAllThreadsAtOnce()
         {
-            Console.WriteLine("Preparing "+ threadActions.Count+  " threads..");
+            Console.WriteLine("Preparing " + threadActions.Count + " threads..");
             ManualResetEvent threadStartSignal = new ManualResetEvent(false);
             foreach (ThreadAction action in threadActions)
             {
@@ -25,20 +30,15 @@ namespace Osherove.ThreadTester.Strategies
             threadStartSignal.Set();
         }
 
+
         protected void StopAllRunningThreads()
         {
-            Console.WriteLine("Stopping running threads...");
-            foreach (ThreadAction action in threadActions)
+            if(ThreadAction.AllCanceled)
             {
-                try
-                {
-                    action.Stop();
-                }
-                catch (ThreadAbortException e)
-                {
-                    
-                }
+                return;
             }
+            Console.WriteLine("Stopping ALL running threads...");
+            ThreadAction.StopAll();
         }
     }
 }

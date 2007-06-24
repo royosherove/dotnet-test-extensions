@@ -10,7 +10,7 @@ namespace Osherove.ThreadTester.Strategies
     {
         private bool isFinishing;
 
-        public override void StartAll(int timeout,List<ThreadAction> actions)
+        public override void StartAll(int timeout, List<ThreadAction> actions)
         {
             this.threadActions = actions;
             StartAllThreads(timeout);
@@ -18,12 +18,13 @@ namespace Osherove.ThreadTester.Strategies
 
         public override void OnThreadFinished(ThreadAction threadAction)
         {
-            if(isFinishing)
+            if (isFinishing || ThreadAction.AllCanceled)
             {
                 return;
             }
             ThreadAction action = new ThreadAction(threadAction.DoCallback);
             action.SignalFinishedCallback = threadAction.SignalFinishedCallback;
+            this.threadActions.Add(action);
             action.Start();
         }
 
@@ -31,12 +32,42 @@ namespace Osherove.ThreadTester.Strategies
         public void StartAllThreads(int runningTimeout)
         {
             isFinishing = false;
-            Console.WriteLine("Starting " + threadActions.Count + " threads..");
             StartAllThreadsAtOnce();
+            
             AutoResetEvent timout = new AutoResetEvent(false);
+            Thread stopperThread = FlagIfEndingPrematurely(timout);
+            stopperThread.Start();
+            
             timout.WaitOne(runningTimeout, false);
-            isFinishing=true;
+            
+            stopperThread.Abort();
+            isFinishing = true;
             StopAllRunningThreads();
+        }
+
+        private Thread FlagIfEndingPrematurely(AutoResetEvent flag)
+        {
+            Thread t = new Thread(new ThreadStart(delegate
+                                      {
+                                          try
+                                          {
+                                              while (true)
+                                              {
+                                                  if (ThreadAction.AllCanceled)
+                                                  {
+                                                      Console.WriteLine("Ending Prematurely");
+                                                      flag.Set();
+                                                      return;
+                                                  }
+                                                  Thread.Sleep(100);
+                                              }
+                                          }
+                                          catch (ThreadAbortException e)
+                                          {
+                                              Thread.ResetAbort();
+                                          }
+                                      }));
+            return t;
         }
     }
 }
