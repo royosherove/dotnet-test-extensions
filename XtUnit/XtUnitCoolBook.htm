@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title></title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+	</head>
+	<body>
+		<H1><SPAN lang="EN-US" style="mso-ansi-language: EN-US">XT-Unit, Cook Book</SPAN></H1>
+		<H2><SPAN lang="EN-US" style="mso-ansi-language: EN-US">A helper for .Net based unit 
+				testing framework</SPAN></H2>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US">Based on the 
+				Interception application block by Roy OSherove</SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US">By <A href="http://www.iserializable.com/">
+					Roy Osherove</A>,&nbsp;&nbsp; <A href="http://teamagile.com/">Team Agile</A></SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+		<H3><SPAN lang="EN-US" style="mso-ansi-language: EN-US">What’s the idea?</SPAN></H3>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US">See these 
+				links for details on the problems this helper is trying to solve:</SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"><A href="http://weblogs.asp.net/rosherove/articles/dbunittesting.aspx">http://weblogs.asp.net/rosherove/articles/dbunittesting.aspx</A></SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"><A href="http://weblogs.asp.net/rosherove/archive/2004/07/20/187863.aspx">http://weblogs.asp.net/rosherove/archive/2004/07/20/187863.aspx</A></SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"><A href="http://weblogs.asp.net/rosherove/archive/2004/10/05/238201.aspx">http://weblogs.asp.net/rosherove/archive/2004/10/05/238201.aspx</A></SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US">How do I use 
+				it?</SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US">Let’s say that 
+				you have a test fixture that performs various actions in each test against the 
+				database, including the basic CRUD operations (Insert, update, etc…).</SPAN></P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US">In order to 
+				easily add roll back abilities to your tests do the following:</SPAN></P>
+		<OL style="MARGIN-TOP: 0in" type="1" start="1">
+			<LI class="MsoNormal" style="mso-list: l0 level1 lfo1; tab-stops: list .5in">
+				<SPAN lang="EN-US" style="mso-ansi-language: EN-US">In your test project, add a 
+					reference to the XtUnit assembly or source code project</SPAN></LI>
+			<LI class="MsoNormal" style="mso-list: l0 level1 lfo1; tab-stops: list .5in">
+				<SPAN lang="EN-US" style="mso-ansi-language: EN-US">add a using/imports statement 
+					for TeamAgile.XtUnit</SPAN></LI>
+			<LI class="MsoNormal" style="mso-list: l0 level1 lfo1; tab-stops: list .5in">
+				<SPAN lang="EN-US" style="mso-ansi-language: EN-US">Place the “DataRollBack” 
+					attribute on your test so that it would&nbsp; look a little like this one:</SPAN></LI></OL>
+		<P class="MsoNormal" style="MARGIN-LEFT: 0.25in"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+		<P class="MsoNormal" style="MARGIN-LEFT: 0.5in; TEXT-INDENT: 0.5in"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">[<SPAN style="COLOR: maroon">Test</SPAN>,
+				<B><SPAN style="COLOR: maroon">DataRollBack</SPAN></B>]</SPAN></P>
+		<P class="MsoNormal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<SPAN style="COLOR: blue">public</SPAN> <SPAN style="COLOR: blue">void</SPAN> <SPAN style="COLOR: maroon">
+					MyDataRelatedTest</SPAN>()</SPAN></P>
+		<P class="MsoNormal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				{</SPAN></P>
+		<P class="MsoNormal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<SPAN style="COLOR: green">//this method will be performed inside a COM+ 
+					transaction</SPAN></SPAN></P>
+		<P class="MsoNormal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<SPAN style="COLOR: green">//this requires windows XP SP2 or better</SPAN></SPAN></P>
+		<P class="MsoNormal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<SPAN style="COLOR: green">//Windows Server 2003 works as well.</SPAN></SPAN></P>
+		<P class="MsoNormal"><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: 'Courier New'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				}</SPAN></P>
+		<OL style="MARGIN-TOP: 0in" type="1" start="4">
+			<LI class="MsoNormal" style="mso-list: l1 level1 lfo2; tab-stops: list .5in">
+				<SPAN lang="EN-US" style="mso-ansi-language: EN-US">Note that you MUST be running 
+					your test (and database) on a machine that is capable of running COM+1.5, which 
+					currently means Windows XP service Pack 2 or windows server 2003</SPAN></LI>
+			<LI class="MsoNormal" style="mso-list: l1 level1 lfo2; tab-stops: list .5in">
+				<SPAN lang="EN-US" style="mso-ansi-language: EN-US">Done!</SPAN></LI></OL>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+		<P class="MsoNormal"><SPAN lang="EN-US" style="mso-ansi-language: EN-US"></SPAN>&nbsp;</P>
+	</body>
+</html>
