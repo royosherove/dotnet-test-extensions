@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 
 namespace XtUnit.Framework.Internal
@@ -20,8 +21,22 @@ namespace XtUnit.Framework.Internal
 		protected IMethodCallMessage methodCallMessage=null;
 		protected MarshalByRefObject methodCallTarget=null;
 		protected IMethodReturnMessage methodReturnMessage=null;
+	    private Type declaringType;
+	    private MethodBase declaringMethod;
 
-		[DebuggerStepThrough]
+	    public Type DeclaringType
+	    {
+	        get { return declaringType; }
+	        set { declaringType = value; }
+	    }
+
+	    public MethodBase DeclaringMethod
+	    {
+	        get { return declaringMethod; }
+	        set { declaringMethod = value; }
+	    }
+
+	    [DebuggerStepThrough]
 		public void PreProcess(MarshalByRefObject target, ref IMethodCallMessage msg)
 		{
 			methodCallTarget=target;

@@ -146,7 +146,11 @@ namespace XtUnit.Framework.Internal
 		{
 			ProcessingAttributeBase[] attrs = getMethodCallCustomAttributes(callMessage);
 			for(int i=0;i<attrs.Length;i++)
-				attrs[i].PreProcess(m_target,ref callMessage);
+			{
+			    attrs[i].DeclaringType = callMessage.MethodBase.DeclaringType;
+			    attrs[i].DeclaringMethod = callMessage.MethodBase;
+			    attrs[i].PreProcess(m_target,ref callMessage);
+			}
 		}
 
 
