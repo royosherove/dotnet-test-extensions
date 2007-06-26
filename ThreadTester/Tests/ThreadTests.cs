@@ -13,7 +13,7 @@ namespace Osherove.ThreadTester.Tests
 
         class Singlton
         {
-            public Guid guid;
+            public readonly Guid guid;
             private static Singlton instance;
 
             public Guid Guid
@@ -43,14 +43,12 @@ namespace Osherove.ThreadTester.Tests
         }
         class Counter
         {
-            public string tempo;
             private int count = 0;
             public void Increment()
             {
                 count++;
                 int x = count*50;
                 string temp = x.ToString() + Guid.NewGuid().ToString();
-                this.tempo = temp;
             }
 
 
@@ -60,26 +58,18 @@ namespace Osherove.ThreadTester.Tests
             }
         }
         
-        class CounterEx
+        [Test]
+        public void events()
         {
-            private int count = 0;
-            public void Increment()
-            {
-                count++;
-
-//                Console.WriteLine("Incremented to " + count);
-            }
-
-            public int Count
-            {
-                get { return count; }
-            }
+            AutoResetEvent e = new AutoResetEvent(false);
+            e.WaitOne();
         }
+       
 
         [Test]
         public void Singlton_MultiThreaded_SameInstance()
         {
-            ThreadTester tt = new ThreadTester();
+            ThreadManager tt = new ThreadManager();
             Guid guid1 = Guid.Empty, 
                 guid2 = Guid.Empty;
 
@@ -99,7 +89,7 @@ namespace Osherove.ThreadTester.Tests
         public void SingleThread()
         {
             Counter c = new Counter();
-            ThreadTester tt = new ThreadTester();
+            ThreadManager tt = new ThreadManager();
             tt.AddThreadAction(
                 delegate
                     {
@@ -111,28 +101,13 @@ namespace Osherove.ThreadTester.Tests
             Assert.IsTrue(tt.LastRunTime<tt.TimeOut);
         }
         
-        
-        [Test]
-        public void SingleThreadWithVerifier()
-        {
-            CounterEx c = new CounterEx();
-            ThreadTester tt = new ThreadTester();
-            tt.AddThreadAction(
-                delegate
-                    {
-                        c.Increment();
-                    });
-
-            tt.RunBehavior=ThreadRunBehavior.RunUntilAllThreadsFinish;
-            tt.StartAllThreads(500);
-            Assert.IsTrue(tt.LastRunTime<tt.TimeOut);
-        }
+       
         
         [Test]
         public void SingleThreadForSpecifiedTimeStrategy()
         {
             Counter c = new Counter();
-            ThreadTester tt = new ThreadTester();
+            ThreadManager tt = new ThreadManager();
             tt.AddThreadAction(
                 delegate
                     {
@@ -149,7 +124,7 @@ namespace Osherove.ThreadTester.Tests
         public void TryToCreateARaceCondition()
         {
             Counter c = new Counter();
-            ThreadTester tt = new ThreadTester();
+            ThreadManager tt = new ThreadManager();
             for (int i = 0; i < 100; i++)
             {
                 tt.AddThreadAction(
@@ -174,7 +149,7 @@ namespace Osherove.ThreadTester.Tests
         public void HundredThreads()
         {
             Counter c = new Counter();
-            ThreadTester tt = new ThreadTester();
+            ThreadManager tt = new ThreadManager();
             for (int i = 0; i < 100; i++)
             {
                 tt.AddThreadAction(delegate
@@ -193,10 +168,37 @@ namespace Osherove.ThreadTester.Tests
         }
 
         [Test]
-        public void PoolResults()
+        public void StopWhenTrue_StopAfterCountReaches1000()
         {
             Counter c = new Counter();
-            ThreadTester tt = new ThreadTester();
+            ThreadManager tt = new ThreadManager();
+            tt.RunBehavior=ThreadRunBehavior.RunForSpecificTime;
+            tt.AddThreadAction(delegate
+                                       {
+                                           for (int j = 0; j < 103; j++)
+                                           {
+                                               c.Increment();
+                                           }
+                                           Thread.Sleep(50);
+                                       });
+
+            tt.StopWhenTrue(delegate
+                                {
+                                    Console.WriteLine("currently at " + c.Count);
+                                    return c.Count > 1000;
+                                },100);
+
+            tt.StartAllThreads(10000);
+            Assert.Greater(c.Count,1000);
+            Assert.Less(c.Count,1050);
+        }
+        
+        
+        [Test]
+        public void StopWhenTrue_StopAfterCountReaches1000()
+        {
+            Counter c = new Counter();
+            ThreadManager tt = new ThreadManager();
             tt.RunBehavior=ThreadRunBehavior.RunForSpecificTime;
             tt.AddThreadAction(delegate
                                        {
