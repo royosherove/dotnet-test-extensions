@@ -1,0 +1,5 @@
+
+1.00.1
+----------
+- Added ResetAbort() to threads to prevent ugly exceptions
+- Added .StopWhenTrue() ability
