@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Osherove.ThreadTester.Events;
 
 namespace Osherove.ThreadTester
 {
@@ -41,7 +42,7 @@ namespace Osherove.ThreadTester
             }
             catch (Exception e)
             {
-                System.Console.WriteLine("abort ex gotten");
+//                System.Console.WriteLine("abort ex gotten");
             }
 //            }
         }
@@ -64,18 +65,26 @@ namespace Osherove.ThreadTester
             try
             {
                 doCallback.Invoke();
-                signalFinishedCallback.Invoke(this);
             }
-            catch (ThreadAbortException e)
+           catch (ThreadAbortException e)
             {
                 Thread.ResetAbort();
+            }
+            catch (Exception e)
+            {
+                ThreadManager.exceptions.Add(e);
+//                throw;
+            }
+            finally
+            {
+                signalFinishedCallback.Invoke(this);
             }
         }
 
         private Thread thread;
         private Func doCallback;
         private ThreadFinishedDelegate signalFinishedCallback;
-        private ManualResetEvent startSignal;
+        private EventWaitHandle startSignal;
         private static bool allCanceled;
 
         public Thread Thread
@@ -101,7 +110,7 @@ namespace Osherove.ThreadTester
             get { return allCanceled; }
         }
 
-        public void StartWhenSignaled(ManualResetEvent startSignal)
+        public void StartWhenSignaled(EventWaitHandle startSignal)
         {
             this.startSignal = startSignal;
             Start();

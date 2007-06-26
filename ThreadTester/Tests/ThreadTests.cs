@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using NUnit.Framework;
+using Osherove.ThreadTester.Events;
 using Osherove.ThreadTester.Strategies;
 
 namespace Osherove.ThreadTester.Tests
@@ -58,11 +59,27 @@ namespace Osherove.ThreadTester.Tests
             }
         }
         
+      
         [Test]
-        public void events()
+        public void StartAllThreads_exceptionsInThreads_FoundInExceptionsProperty()
         {
-            AutoResetEvent e = new AutoResetEvent(false);
-            e.WaitOne();
+        
+            ThreadManager tt = new ThreadManager();
+            tt.AddThreadAction(delegate
+                                   {
+                                       throw  new Exception("forced exception 1");
+                                   });
+            tt.AddThreadAction(delegate
+                                   {
+                                       throw  new Exception("forced exception 2");
+                                   });
+            tt.AddThreadAction(delegate
+                                   {
+                                       throw  new Exception("forced exception 3");
+                                   });
+        
+            tt.StartAllThreads(1000);
+            Assert.AreEqual(3,ThreadManager.exceptions.Count);
         }
        
 
@@ -167,31 +184,7 @@ namespace Osherove.ThreadTester.Tests
             tt.StartAllThreads(22500);
         }
 
-        [Test]
-        public void StopWhenTrue_StopAfterCountReaches1000()
-        {
-            Counter c = new Counter();
-            ThreadManager tt = new ThreadManager();
-            tt.RunBehavior=ThreadRunBehavior.RunForSpecificTime;
-            tt.AddThreadAction(delegate
-                                       {
-                                           for (int j = 0; j < 103; j++)
-                                           {
-                                               c.Increment();
-                                           }
-                                           Thread.Sleep(50);
-                                       });
-
-            tt.StopWhenTrue(delegate
-                                {
-                                    Console.WriteLine("currently at " + c.Count);
-                                    return c.Count > 1000;
-                                },100);
-
-            tt.StartAllThreads(10000);
-            Assert.Greater(c.Count,1000);
-            Assert.Less(c.Count,1050);
-        }
+      
         
         
         [Test]

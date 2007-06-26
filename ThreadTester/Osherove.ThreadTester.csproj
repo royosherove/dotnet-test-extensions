@@ -48,11 +48,13 @@
     <Compile Include="Events\AutoResetEventEx.cs" />
     <Compile Include="Events\EventWaitHandleEx.cs" />
     <Compile Include="Events\ManualResetEventEx.cs" />
+    <Compile Include="Events\UnhandledException.cs" />
     <Compile Include="Events\WaitEventArgs.cs" />
     <Compile Include="Strategies\AbstractThreadRunStrategy.cs" />
     <Compile Include="Strategies\AllThreadsShouldFinishStrategy.cs" />
     <Compile Include="Strategies\RunForSpecificTimeStrategy.cs" />
     <Compile Include="IThreadRunStrategy.cs" />
+    <Compile Include="Tests\EventWaitHandleExTests.cs" />
     <Compile Include="ThreadAction.cs" />
     <Compile Include="ThreadManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

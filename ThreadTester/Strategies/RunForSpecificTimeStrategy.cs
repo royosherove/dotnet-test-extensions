@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using NUnit.Framework;
+using Osherove.ThreadTester.Events;
 
 namespace Osherove.ThreadTester.Strategies
 {
@@ -33,8 +34,8 @@ namespace Osherove.ThreadTester.Strategies
         {
             isFinishing = false;
             StartAllThreadsAtOnce();
-            
-            AutoResetEvent timout = new AutoResetEvent(false);
+
+            AutoResetEventEx timout = new AutoResetEventEx(false);
             Thread stopperThread = FlagIfEndingPrematurely(timout);
             stopperThread.Start();
             
@@ -45,7 +46,7 @@ namespace Osherove.ThreadTester.Strategies
             StopAllRunningThreads();
         }
 
-        private Thread FlagIfEndingPrematurely(AutoResetEvent flag)
+        private Thread FlagIfEndingPrematurely(AutoResetEventEx flag)
         {
             Thread t = new Thread(new ThreadStart(delegate
                                       {

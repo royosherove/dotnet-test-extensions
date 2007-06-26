@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Osherove.ThreadTester.Events;
 
 namespace Osherove.ThreadTester.Strategies
 {
@@ -21,7 +22,7 @@ namespace Osherove.ThreadTester.Strategies
         protected void StartAllThreadsAtOnce()
         {
             Console.WriteLine("Preparing " + threadActions.Count + " threads..");
-            ManualResetEvent threadStartSignal = new ManualResetEvent(false);
+            ManualResetEventEx threadStartSignal = new ManualResetEventEx(false);
             foreach (ThreadAction action in threadActions)
             {
                 action.StartWhenSignaled(threadStartSignal);

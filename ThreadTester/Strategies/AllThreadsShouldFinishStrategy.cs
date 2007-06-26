@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using NUnit.Framework;
+using Osherove.ThreadTester.Events;
 
 namespace Osherove.ThreadTester.Strategies
 {
     class AllThreadsShouldFinishStrategy:AbstractThreadRunStrategy
     {
-        readonly AutoResetEvent allThreadsAreFinishedSignal = new AutoResetEvent(false);
+        readonly AutoResetEventEx allThreadsAreFinishedSignal = new AutoResetEventEx(false);
         private int finishedThreadsCount = 0;
 
         private readonly object sync = new object();
