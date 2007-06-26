@@ -1,40 +1,37 @@
-Microsoft Visual Studio Solution File, Format Version 8.00
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XtUnit.Framework", "XtUnit.Framework\XtUnit.Framework.csproj", "{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XtUnit.Extensions.Royo", "Xtunit.Extensions.Royo\XtUnit.Extensions.Royo.csproj", "{2A8B9AEE-2400-4829-AC47-4D1094587272}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XtUnit.SampleTests", "XtUnit.SampleTests\XtUnit.SampleTests.csproj", "{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}"
-	ProjectSection(ProjectDependencies) = postProject
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29F60767-E492-407D-9CF4-9F7A5AC9CFAD}"
+	ProjectSection(SolutionItems) = preProject
+		XtUnit.key = XtUnit.key
+		XtUnitCoolBook.htm = XtUnitCoolBook.htm
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SolutionConfiguration) = preSolution
-		Debug = Debug
-		Release = Release
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfiguration) = postSolution
-		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Debug.ActiveCfg = Debug|.NET
-		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Debug.Build.0 = Debug|.NET
-		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Release.ActiveCfg = Release|.NET
-		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Release.Build.0 = Release|.NET
-		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Debug.ActiveCfg = Debug|.NET
-		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Debug.Build.0 = Debug|.NET
-		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Release.ActiveCfg = Release|.NET
-		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Release.Build.0 = Release|.NET
-		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Debug.ActiveCfg = Debug|.NET
-		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Debug.Build.0 = Debug|.NET
-		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Release.ActiveCfg = Release|.NET
-		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Release.Build.0 = Release|.NET
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A8B9AEE-2400-4829-AC47-4D1094587272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{576DF679-DDF4-4FD5-A2D3-01A4C19245BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionItems) = postSolution
-		XtUnit.key = XtUnit.key
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-	EndGlobalSection
-	GlobalSection(ExtensibilityAddIns) = postSolution
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
