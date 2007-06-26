@@ -102,6 +102,11 @@
     <Compile Include="SampleTestFixture.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="threading\BarRecorderTests.cs" />
+    <Compile Include="threading\MultiThreadedTestCase.cs" />
+    <Compile Include="threading\MultiThreadedTestCaseAttributes.cs" />
+    <Compile Include="threading\TestCase.cs" />
+    <Compile Include="threading\UnhandledThreadException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
