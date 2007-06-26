@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using XtUnit.Framework.Internal;
+using TeamAgile.ApplicationBlocks.Interception;
 
-namespace XtUnit.Framework
+namespace TeamAgile.ApplicationBlocks.Interception.UnitTestExtensions
 {
 	/// <summary>
 	///     This is the base class for all the test fixtures you will
@@ -12,7 +12,7 @@ namespace XtUnit.Framework
 	///     
 	/// </remarks>
 	[TestFixture]
-	public class TestFixtureBase:InterceptableObject
+	public class ExtensibleFixture:InterceptableObject
 	{
 
 	}

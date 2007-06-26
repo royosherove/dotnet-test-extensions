@@ -4,12 +4,12 @@ using System.Reflection;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("NUnit.Extensions.ExtensibilityFramework.Samples")]
-[assembly: AssemblyDescription("NUnit.Extensions.ExtensibilityFramework.Samples")]
+[assembly: AssemblyTitle("TeamAgile.XtUnit")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Roy Osherove")]
+[assembly: AssemblyCompany("Team Agile")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("2004 Roy Osherove")]
+[assembly: AssemblyCopyright("2005 Roy Osherove")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
@@ -24,7 +24,7 @@ using System.Reflection;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("1.0.1")]
+[assembly: AssemblyVersion("1.0.5")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
@@ -52,5 +52,5 @@ using System.Reflection;
 //       documentation for more information on this.
 //
 [assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("..\\..\\..\\XtUnit.key")]
+[assembly: AssemblyKeyFile("")]
 [assembly: AssemblyKeyName("")]

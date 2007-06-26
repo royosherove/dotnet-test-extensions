@@ -1,20 +1,24 @@
-/// Created by Roy Osherove, http://www.iserializable.com
-/// ------------------------------------------------------
+/// Learn more about the technique shown here by reading the following articles:
+/// http://weblogs.asp.net/rosherove/articles/dbunittesting.aspx
+/// http://weblogs.asp.net/rosherove/archive/2004/07/20/187863.aspx
+/// written by Roy Osherove (www.ISerializable.com)
+/// 
+
 using System;
 using System.Diagnostics;
 using System.EnterpriseServices;
-using XtUnit.Framework;
+using TeamAgile.ApplicationBlocks.Interception;
 
-namespace XtUnit.Extensions.Royo
+namespace TeamAgile.ApplicationBlocks.Interception.UnitTestExtensions
 {
 
 
 	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor |AttributeTargets.Field,Inherited=true)]
-	public class CustomRollBackAttribute:TestProcessingAttributeBase
+	public class DataRollBackAttribute:BaseProcessingAttribute
 	{
 
 		[DebuggerStepThrough]
-		protected override void OnPreProcess()
+		protected override void OnPreProcess(object sender,PreProcessEventArgs args)
 		{
 			try
 			{
@@ -24,10 +28,10 @@ namespace XtUnit.Extensions.Royo
 				config.TransactionDescription="Application Unit Tests Transaction";
 				config.TransactionTimeout=10000;
 
-				OutputDebugMessage("ENTERING transaction context on method: " + methodCallMessage.MethodBase.Name);
+				OutputDebugMessage("ENTERING transaction context on method: " + args.MethodCallMessage.MethodBase.Name);
 				
 				ServiceDomain.Enter(config);
-				OutputDebugMessage("ENTRED transaction context on method: " + methodCallMessage.MethodBase.Name);
+				OutputDebugMessage("ENTRED transaction context on method: " + args.MethodCallMessage.MethodBase.Name);
 
 
 			}
@@ -38,13 +42,13 @@ namespace XtUnit.Extensions.Royo
 		}
 
 		[DebuggerStepThrough]
-		protected override void OnPostProcess()
+		protected override void OnPostProcess(object sender,PostProcessEventArgs args)
 		{
 			try
 			{
 				if(ContextUtil.IsInTransaction)
 				{
-					OutputDebugMessage("LEAVING transaction context on method: " + methodCallMessage.MethodBase.Name);
+					OutputDebugMessage("LEAVING transaction context on method: " + args.MethodCallMessage.MethodBase.Name);
 					ContextUtil.SetAbort();
 				}
 				ServiceDomain.Leave();

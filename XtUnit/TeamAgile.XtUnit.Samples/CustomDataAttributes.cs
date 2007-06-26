@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using XtUnit.Framework.Internal;
+using TeamAgile.ApplicationBlocks.Interception;
+using TeamAgile.ApplicationBlocks.Interception.UnitTestExtensions;
 
 namespace XtUnit.Framework
 {
     [TestFixture]
-    public class CustomDataAttributes:TestFixtureBase
+    public class CustomDataAttributes:ExtensibleFixture
     {
         [Test]
         [Data("sql","Select * from categories")]
@@ -20,7 +21,7 @@ namespace XtUnit.Framework
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    class DataAttribute:ProcessingAttributeBase
+    class DataAttribute:BaseProcessingAttribute
     {
         private readonly string data = string.Empty;
         private readonly string name = string.Empty;
@@ -48,12 +49,13 @@ namespace XtUnit.Framework
         }
 
         public static readonly Dictionary<string, string> items = new Dictionary<string, string>();
-        protected override void OnPreProcess()
+
+        protected override void OnPreProcess(object sender, PreProcessEventArgs args)
         {
             items[name] = data;
         }
 
-        protected override void OnPostProcess()
+        protected override void OnPostProcess(object sender, PostProcessEventArgs args)
         {
         }
     }

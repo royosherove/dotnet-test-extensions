@@ -1,6 +1,7 @@
 using System;
+using TeamAgile.ApplicationBlocks.Interception.Internal;
 
-namespace XtUnit.Framework.Internal
+namespace TeamAgile.ApplicationBlocks.Interception
 {
 	/// <summary>
 	///     Base class for objects that can carry Custom attributes 

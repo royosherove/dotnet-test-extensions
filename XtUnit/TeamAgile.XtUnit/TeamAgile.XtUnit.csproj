@@ -4,13 +4,21 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2A8B9AEE-2400-4829-AC47-4D1094587272}</ProjectGuid>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon>
     </ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
-    <AssemblyName>XtUnit.Extensions.Royo</AssemblyName>
+    <AssemblyName>TeamAgile.UnitTestExtensions</AssemblyName>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>
@@ -18,7 +26,7 @@
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
-    <RootNamespace>XtUnit.Extensions.Royo</RootNamespace>
+    <RootNamespace>TeamAgile.UnitTestExtensions</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
@@ -74,6 +82,11 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <Name>nunit.framework</Name>
+      <HintPath>..\..\..\..\..\..\Program Files\NUnit 2.2\\bin\nunit.framework.dll</HintPath>
+      <AssemblyFolderKey>hklm\dn\nunit.framework</AssemblyFolderKey>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -86,20 +99,57 @@
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
-    <ProjectReference Include="..\XtUnit.Framework\XtUnit.Framework.csproj">
-      <Name>XtUnit.Framework</Name>
-      <Project>{0D93571A-7C7B-42F6-9BF2-03C423DC44C9}</Project>
+    <ProjectReference Include="Osherove.InterceptionFramework">
+      <Name>Osherove.InterceptionFramework</Name>
+      <Project>{21DE9EF5-E7F7-4E2C-B7B9-6434300F35F3}</Project>
       <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs">
+    <Compile Include="Base\ExtensibleFixture.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CustomRollbackAttribute.cs">
+    <Compile Include="Base\Framework\BaseProcessingAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CustomTracingAttribute.cs">
+    <Compile Include="Base\Framework\EventArgs\PostProcessEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Framework\EventArgs\PreProcessEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Framework\EventArgs\ProcessEventArgs.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Framework\InterceptableObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Framework\Internal\AssemblyInfo.cs" />
+    <Compile Include="Base\Framework\Internal\InterceptAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Framework\Internal\InterceptProperty.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Framework\Internal\InterceptSink.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CrossThreadedAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CustomRepeatAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataRollbackAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DoNotRunAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PriorityAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ShowTracingAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
